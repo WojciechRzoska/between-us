@@ -4,7 +4,11 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"test": "pnpm -r test",
+		"test:backend": "pnpm --filter backend test",
+		"test:mobile": "pnpm --filter mobile test",
+		"test:shared": "pnpm --filter \"shared-*\" test",
+		"test:coverage": "pnpm -r test:coverage",
 		"prepare": "husky"
 	},
 	"keywords": [],

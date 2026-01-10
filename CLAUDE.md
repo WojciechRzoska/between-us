@@ -262,15 +262,136 @@ ngrok http 3000
 # Set webhook URL in RevenueCat dashboard to: https://abc123.ngrok.io/api/v1/webhooks/revenuecat
 ```
 
+## Testing Strategy
+
+This monorepo uses **different testing frameworks** optimized for each workspace:
+
+### Backend & Shared Packages: Vitest
+- **Why:** Native TypeScript support, faster than Jest, modern DX
+- **Config:** [apps/backend/vitest.config.ts](apps/backend/vitest.config.ts)
+- **Test directory:** `apps/backend/test/`
+
+```bash
+cd apps/backend
+pnpm test              # Run tests in watch mode
+pnpm test:run          # Run tests once
+pnpm test:ui           # Open Vitest UI
+pnpm test:coverage     # Generate coverage report
+```
+
+**Example test:**
+```typescript
+// test/unit/services/auth.service.test.ts
+import { describe, it, expect } from 'vitest';
+import { authService } from '../../../src/services/auth.service';
+
+describe('authService', () => {
+  it('should validate email', () => {
+    expect(authService.validateEmail('test@example.com')).toBe(true);
+  });
+});
+```
+
+### Mobile App: Jest
+- **Why:** Official Expo support via `jest-expo`, React Native ecosystem standard
+- **Config:** [apps/mobile/jest.config.js](apps/mobile/jest.config.js)
+- **Test directory:** `apps/mobile/src/**/__tests__/`
+
+```bash
+cd apps/mobile
+pnpm test              # Run tests in watch mode
+pnpm test:coverage     # Generate coverage report
+```
+
+**Example component test:**
+```typescript
+// src/components/common/__tests__/Button.test.tsx
+import { render, fireEvent } from '@testing-library/react-native';
+import { Button } from '../Button';
+
+describe('Button', () => {
+  it('should call onPress when pressed', () => {
+    const onPressMock = jest.fn();
+    const { getByText } = render(
+      <Button onPress={onPressMock} title="Click Me" />
+    );
+
+    fireEvent.press(getByText('Click Me'));
+    expect(onPressMock).toHaveBeenCalledTimes(1);
+  });
+});
+```
+
+### Shared Packages: Vitest
+- **Why:** Fast, simple testing for pure TypeScript/Zod logic
+- **Config:** Each package has its own `vitest.config.ts`
+
+```bash
+cd packages/shared-validation
+pnpm test              # Run tests
+pnpm test:run          # Run once
+```
+
+**Example Zod schema test:**
+```typescript
+// packages/shared-validation/test/schemas/auth.schemas.test.ts
+import { describe, it, expect } from 'vitest';
+import { loginSchema } from '../../src/schemas/auth.schemas';
+
+describe('loginSchema', () => {
+  it('should reject invalid email', () => {
+    const result = loginSchema.safeParse({
+      email: 'invalid',
+      password: 'password123',
+    });
+    expect(result.success).toBe(false);
+  });
+});
+```
+
+### Root-Level Test Commands
+
+```bash
+# Run all tests across monorepo
+pnpm test
+
+# Run tests for specific workspace
+pnpm test:backend
+pnpm test:mobile
+pnpm test:shared
+
+# Generate coverage reports
+pnpm test:coverage
+```
+
+### Mock Service Worker (MSW) for Backend
+
+The backend uses MSW to mock external APIs (OpenAI, Supabase) in tests:
+
+```typescript
+// test/mocks/handlers.ts
+import { http, HttpResponse } from 'msw';
+
+export const handlers = [
+  http.post('https://api.openai.com/v1/chat/completions', () => {
+    return HttpResponse.json({
+      choices: [{ message: { content: 'Mocked AI response' } }],
+    });
+  }),
+];
+```
+
 ## Code Quality Tools
 
 - **Biome:** Linting + formatting (replaces ESLint + Prettier)
 - **Husky:** Pre-commit hook runs `pnpm biome check --write .`
 - **TypeScript:** Strict mode enabled in all packages
+- **Testing:** Vitest (backend/shared) + Jest (mobile)
 
 Run manually:
 ```bash
 pnpm biome check --write .
+pnpm test
 ```
 
 ## Deployment Notes
