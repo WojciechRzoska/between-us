@@ -1,21 +1,21 @@
 {
-  "name": "betweenUs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.28.0",
-  "devDependencies": {
-    "@biomejs/biome": "^2.3.11",
-    "husky": "^9.1.7",
-    "tailwindcss": "^4.1.18",
-    "turbo": "^2.7.3",
-    "typescript": "^5.9.3"
-  }
+	"name": "betweenUs",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"prepare": "husky"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"packageManager": "pnpm@10.28.0",
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.11",
+		"husky": "^9.1.7",
+		"tailwindcss": "^4.1.18",
+		"turbo": "^2.7.3",
+		"typescript": "^5.9.3"
+	}
 }
