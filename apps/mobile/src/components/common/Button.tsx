@@ -1,11 +1,11 @@
+import { ButtonVariant, ComponentSize } from "@/types/components";
+import { cn } from "@/utils/cn";
 import {
 	ActivityIndicator,
 	Pressable,
 	type PressableProps,
 	Text,
 } from "react-native";
-import { ButtonVariant, ComponentSize } from "@/types/components";
-import { cn } from "@/utils/cn";
 
 interface ButtonProps extends Omit<PressableProps, "children"> {
 	title: string;
@@ -14,6 +14,7 @@ interface ButtonProps extends Omit<PressableProps, "children"> {
 	loading?: boolean;
 	disabled?: boolean;
 	onPress: VoidFunction;
+	className?: string;
 }
 
 export const Button = ({
