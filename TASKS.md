@@ -412,6 +412,32 @@
 
 ## Future Enhancements (Post-MVP)
 
+### User Profile Features
+- ⏭️ Add full name field
+- ⏭️ Add display name field
+- ⏭️ Avatar upload functionality
+- ⏭️ Dating context fields:
+  - ⏭️ Relationship status (single, dating, relationship, complicated)
+  - ⏭️ Gender
+  - ⏭️ Age range
+- ⏭️ User preferences:
+  - ⏭️ Language selection
+  - ⏭️ Timezone setting
+- ⏭️ Notification preferences:
+  - ⏭️ Push notifications toggle
+  - ⏭️ Email notifications toggle
+- ⏭️ Profile editing screen
+
+### Onboarding Flow
+- ⏭️ Add `onboarding_completed` field to users table
+- ⏭️ Create onboarding screens:
+  - ⏭️ Welcome screen
+  - ⏭️ Feature explanation (Love Decoder, Coach, Insights)
+  - ⏭️ Optional: Basic preferences collection
+- ⏭️ Navigation logic to show onboarding on first launch
+- ⏭️ Skip/Complete onboarding functionality
+
+### Advanced Features
 - ⏭️ Voice message analysis
 - ⏭️ Screenshot upload & OCR
 - ⏭️ Couple mode (connect two accounts)
